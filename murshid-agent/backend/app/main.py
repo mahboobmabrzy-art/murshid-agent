@@ -1,10 +1,12 @@
 from fastapi import FastAPI
-from app.routers import project, task
+from app.database import engine, Base
+from app.routers import projects
 
-app = FastAPI(title="Murshid OS API", version="1.0.0")
+Base.metadata.create_all(bind=engine)
 
-app.include_router(project.router)
-app.include_router(task.router)
+app = FastAPI(title="Murshid OS API")
+
+app.include_router(projects.router)
 
 @app.get("/")
 def read_root():
