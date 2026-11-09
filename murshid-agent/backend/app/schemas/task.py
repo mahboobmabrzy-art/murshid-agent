@@ -1,11 +1,14 @@
 from typing import Optional
 from pydantic import BaseModel, ConfigDict
 
-class TaskCreate(BaseModel):
+class TaskBase(BaseModel):
     title: str
     description: Optional[str] = None
     completed: bool = False
     project_id: Optional[int] = None
+
+class TaskCreate(TaskBase):
+    pass
 
 class TaskUpdate(BaseModel):
     title: Optional[str] = None
@@ -13,6 +16,6 @@ class TaskUpdate(BaseModel):
     completed: Optional[bool] = None
     project_id: Optional[int] = None
 
-class TaskResponse(TaskCreate):
+class TaskResponse(TaskBase):
     id: int
     model_config = ConfigDict(from_attributes=True)
