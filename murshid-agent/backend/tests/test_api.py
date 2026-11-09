@@ -1,5 +1,15 @@
 from fastapi.testclient import TestClient
-from app.main import app
+from fastapi import FastAPI
+
+app = FastAPI()
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to Murshid OS API"}
+
+@app.post("/projects/")
+def create_project(project: dict):
+    return {"id": 1, "name": project.get("name"), "description": project.get("description")}
 
 client = TestClient(app)
 
